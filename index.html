@@ -1,1 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&B Yacht Designs — Boat Plans, Kits & Building Supplies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B3A6B; --navy-deep:#0F2347; --navy-mid:#234880;
+  --gold:#C9A84C; --gold-lt:#E8C97A; --rust:#C84B2F;
+  --cream:#F8F5EF; --warm-white:#FDFCFA; --gray-lt:#EAE8E3;
+  --gray-mid:#9A9590; --text:#1A1816; --text-mid:#4A4540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Karla',system-ui,sans-serif;
+  --hh:72px; --ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--warm-white);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
 
+/* ── Header ── */
+.site-header{
+  position:fixed;top:0;left:0;right:0;height:var(--hh);
+  background:var(--navy-deep);z-index:1000;
+  display:flex;align-items:center;padding:0 2rem;
+  border-bottom:1px solid rgba(201,168,76,.2);transition:all .3s var(--ease);
+}
+.site-header.scrolled{background:rgba(15,35,71,.97);backdrop-filter:blur(12px);box-shadow:0 2px 24px rgba(0,0,0,.3)}
+.logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;margin-right:1.5rem}
+.logo-img{height:44px;width:auto;filter:brightness(0) invert(1)}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-text .brand{font-family:var(--serif);font-size:1.12rem;font-weight:500;color:var(--warm-white);letter-spacing:.02em}
+.logo-text .tagline{font-size:.57rem;font-weight:400;color:var(--gold);letter-spacing:.18em;text-transform:uppercase}
+.main-nav{display:flex;align-items:center;flex:1;height:100%}
+.nav-item{position:relative;height:100%;display:flex;align-items:center}
+.nav-link{display:flex;align-items:center;gap:.3rem;padding:0 .95rem;height:100%;font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85);transition:color .25s;white-space:nowrap;cursor:pointer;border:none;background:none;font-family:var(--sans)}
+.nav-link:hover,.nav-item:hover .nav-link{color:var(--gold)}
+.nav-link svg{transition:transform .25s}
+.nav-item:hover .nav-link svg{transform:rotate(180deg)}
+.mega-menu{position:absolute;top:var(--hh);left:0;background:var(--navy-deep);border-top:2px solid var(--gold);min-width:660px;padding:1.8rem 2.2rem;display:none;gap:1.8rem;box-shadow:0 16px 48px rgba(0,0,0,.4);z-index:999}
+.nav-item:hover .mega-menu{display:flex}
+.mega-col{min-width:150px}
+.mega-col-title{font-size:.58rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);padding-bottom:.45rem;margin-bottom:.45rem;border-bottom:1px solid rgba(201,168,76,.2)}
+.mega-col a{display:block;font-size:.78rem;color:rgba(255,255,255,.7);padding:.24rem 0;transition:all .2s;line-height:1.4}
+.mega-col a:hover{color:var(--gold-lt);padding-left:.4rem}
+.header-right{display:flex;align-items:center;gap:.4rem;margin-left:auto}
+.hbtn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);cursor:pointer;transition:all .25s;background:none}
+.hbtn:hover{border-color:var(--gold);color:var(--gold)}
+.cart-wrap{position:relative}
+.cart-count{position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:var(--rust);color:white;border-radius:50%;font-size:.58rem;font-weight:700;display:none;align-items:center;justify-content:center}
+.cart-count.visible{display:flex}
+.hcta{margin-left:.5rem;padding:.4rem 1rem;background:var(--gold);color:var(--navy-deep);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;transition:all .25s;white-space:nowrap}
+.hcta:hover{background:var(--gold-lt);transform:translateY(-1px)}
+
+/* ── Hero ── */
+.hero{position:relative;height:100vh;min-height:560px;overflow:hidden;margin-top:var(--hh)}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.hero-slide.active{opacity:1}
+.hero-slide img{width:100%;height:100%;object-fit:cover}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,22,45,.75) 0%,rgba(10,22,45,.32) 55%,rgba(10,22,45,.1) 100%)}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:4rem 5vw 3.5rem;z-index:2;background:linear-gradient(to top,rgba(10,22,45,.88) 0%,transparent 100%)}
+.hero-eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;opacity:0;transform:translateY(12px);animation:fu .8s .2s forwards}
+.hero-title{font-family:var(--serif);font-size:clamp(2.5rem,5.2vw,4.6rem);font-weight:300;color:var(--warm-white);line-height:1.08;margin-bottom:1rem;max-width:18ch;opacity:0;transform:translateY(16px);animation:fu .9s .35s forwards}
+.hero-title em{font-style:italic;color:var(--gold-lt)}
+.hero-sub{font-size:.98rem;font-weight:300;color:rgba(255,255,255,.82);max-width:50ch;line-height:1.65;margin-bottom:1.8rem;opacity:0;transform:translateY(12px);animation:fu .9s .5s forwards}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;transform:translateY(12px);animation:fu .9s .65s forwards}
+.btn-primary{padding:.8rem 1.75rem;background:var(--gold);color:var(--navy-deep);font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;transition:all .25s;border:2px solid var(--gold)}
+.btn-primary:hover{background:var(--gold-lt);border-color:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.25)}
+.btn-outline{padding:.8rem 1.75rem;background:transparent;color:white;font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;border:2px solid rgba(255,255,255,.4);transition:all .25s}
+.btn-outline:hover{border-color:white;background:rgba(255,255,255,.08)}
+.slide-dots{position:absolute;right:5vw;bottom:3.5rem;z-index:3;display:flex;flex-direction:column;gap:.5rem;align-items:flex-end}
+.slide-dot{width:30px;height:2px;background:rgba(255,255,255,.3);cursor:pointer;transition:all .25s;border:none}
+.slide-dot.active{background:var(--gold);width:46px}
+@keyframes fu{to{opacity:1;transform:none}}
+
+/* ── Pillars ── */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);background:var(--navy)}
+.pillar{padding:1.9rem 1.5rem;display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;border-right:1px solid rgba(255,255,255,.08);cursor:pointer;transition:background .25s;position:relative;overflow:hidden}
+.pillar::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.pillar:hover{background:var(--navy-mid)}
+.pillar:hover::before{transform:scaleX(1)}
+.pillar-icon{width:32px;height:32px;color:var(--gold);margin-bottom:.15rem}
+.pillar-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:white;line-height:1.2}
+.pillar-desc{font-size:.74rem;font-weight:300;color:rgba(255,255,255,.56);line-height:1.5}
+.pillar-link{margin-top:.3rem;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+/* ── Sections ── */
+.section{padding:4.5rem 5vw}
+.section-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--navy);line-height:1.2;margin-bottom:.45rem}
+.section-title em{font-style:italic;color:var(--rust)}
+.section-sub{font-size:.91rem;font-weight:300;color:var(--text-mid);max-width:50ch;line-height:1.7}
+
+/* ── Boats grid ── */
+.boats-section{background:var(--cream)}
+.boats-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.boats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;min-height:400px}
+.boat-card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--navy-deep)}
+.boat-card:first-child{grid-row:1/3;aspect-ratio:auto}
+.boat-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.boat-card:hover img{transform:scale(1.04)}
+.boat-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,22,45,.83) 0%,rgba(10,22,45,.1) 50%,transparent 100%)}
+.boat-card-info{position:absolute;bottom:0;left:0;right:0;padding:1.3rem;z-index:2;transform:translateY(4px);transition:transform .25s}
+.boat-card:hover .boat-card-info{transform:none}
+.boat-tag{display:inline-block;font-size:.56rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.4);padding:.17rem .42rem;border-radius:1px;margin-bottom:.32rem}
+.boat-name{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:white;line-height:1.2}
+.boat-card:first-child .boat-name{font-size:1.85rem}
+.boat-spec{font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.18rem}
+.boat-actions{display:flex;gap:.5rem;margin-top:.65rem;opacity:0;transform:translateY(6px);transition:all .25s}
+.boat-card:hover .boat-actions{opacity:1;transform:none}
+.boat-btn{font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.36rem .78rem;border-radius:1px;transition:all .2s;border:1px solid}
+.boat-btn-plans{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.boat-btn-kit{background:transparent;border-color:rgba(255,255,255,.5);color:white}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.06) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* ── Stats ── */
+.stats-band{background:var(--navy-deep);padding:2.6rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.8rem;border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15)}
+.stat{display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat-num{font-family:var(--serif);font-size:2.5rem;font-weight:300;color:var(--gold);line-height:1}
+.stat-lbl{font-size:.63rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.48);margin-top:.28rem}
+.stat-div{width:1px;height:52px;background:rgba(255,255,255,.1)}
+
+/* ── Supplies ── */
+.supplies-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;margin-top:2.3rem}
+.supply-card{border:1px solid var(--gray-lt);border-radius:3px;overflow:hidden;transition:all .25s;cursor:pointer;text-decoration:none;display:block}
+.supply-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateY(-2px)}
+.supply-card-img{aspect-ratio:4/3;background:var(--gray-lt);display:flex;align-items:center;justify-content:center;font-size:2.2rem}
+.supply-card-body{padding:.9rem}
+.supply-card-title{font-family:var(--serif);font-size:.98rem;font-weight:500;color:var(--navy);margin-bottom:.18rem}
+.supply-card-sub{font-size:.7rem;color:var(--gray-mid)}
+.supply-card-arrow{float:right;color:var(--gold)}
+
+/* ── Why ── */
+.why-section{background:var(--cream)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center;margin-top:1.8rem}
+.why-image{position:relative}
+.why-image img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
+.why-badge{position:absolute;bottom:-1.4rem;right:-1.4rem;background:var(--navy);color:white;padding:1rem 1.3rem;width:130px;text-align:center}
+.why-badge .num{font-family:var(--serif);font-size:1.9rem;font-weight:300;color:var(--gold);line-height:1}
+.why-badge .lbl{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.52);margin-top:.18rem;line-height:1.4}
+.why-points{display:flex;flex-direction:column;gap:1.5rem;margin-top:1.6rem}
+.why-point{display:flex;gap:.9rem;align-items:flex-start}
+.why-num{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--gray-lt);line-height:1;min-width:1.7rem;text-align:right}
+.why-text h4{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);margin-bottom:.18rem}
+.why-text p{font-size:.81rem;font-weight:300;color:var(--text-mid);line-height:1.65}
+
+/* ── Press ── */
+.press-band{background:var(--navy);padding:2.5rem 5vw;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem}
+.press-quote{font-family:var(--serif);font-size:clamp(1.05rem,1.9vw,1.5rem);font-weight:300;color:rgba(255,255,255,.88);line-height:1.5;font-style:italic}
+.press-quote strong{color:var(--gold-lt);font-style:normal;font-weight:500}
+.press-source{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:.55rem}
+.press-actions{display:flex;flex-direction:column;gap:.7rem;flex-shrink:0}
+
+/* ── Cart drawer ── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1999;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:100vw;background:var(--warm-white);z-index:2000;transform:translateX(100%);transition:transform .35s var(--ease);display:flex;flex-direction:column}
+.cart-drawer.open{transform:none}
+.cart-drawer-header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--gray-lt);display:flex;align-items:center;justify-content:space-between}
+.cart-drawer-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--navy)}
+.cart-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--gray-mid);padding:.2rem}
+.cart-drawer-body{flex:1;overflow-y:auto;padding:1.5rem}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--gray-mid)}
+.cart-item{display:flex;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--gray-lt)}
+.cart-item-img{width:60px;height:60px;object-fit:cover;border-radius:2px;flex-shrink:0;background:var(--gray-lt)}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:.82rem;font-weight:600;color:var(--navy);margin-bottom:.15rem}
+.cart-item-price{font-size:.78rem;color:var(--text-mid)}
+.cart-item-remove{background:none;border:none;color:var(--gray-mid);cursor:pointer;font-size:.75rem;padding:.1rem;transition:color .2s}
+.cart-item-remove:hover{color:var(--rust)}
+.cart-drawer-footer{padding:1.2rem 1.5rem;border-top:1px solid var(--gray-lt)}
+.cart-subtotal{display:flex;justify-content:space-between;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:1rem}
+.cart-checkout{display:block;width:100%;padding:.85rem;background:var(--gold);color:var(--navy-deep);font-family:var(--sans);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;border-radius:2px;border:none;cursor:pointer;transition:all .25s}
+.cart-checkout:hover{background:var(--gold-lt)}
+
+/* ── Search ── */
+.search-overlay{position:fixed;inset:0;background:rgba(10,22,45,.96);z-index:3000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.search-overlay.open{opacity:1;pointer-events:all}
+.search-inner{width:90%;max-width:580px}
+.search-label{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem}
+.search-wrap{display:flex;align-items:center;border-bottom:2px solid var(--gold);padding-bottom:.45rem}
+.search-input{flex:1;background:none;border:none;outline:none;font-family:var(--serif);font-size:1.85rem;font-weight:300;color:white;padding:.18rem 0}
+.search-input::placeholder{color:rgba(255,255,255,.2)}
+.search-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:1.3rem;cursor:pointer;padding:.2rem;transition:color .2s}
+.search-close:hover{color:white}
+
+/* ── Footer ── */
+.site-footer{background:var(--navy-deep);padding:3.8rem 5vw 2rem;border-top:2px solid var(--gold)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.8rem;padding-bottom:2.8rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.footer-desc{font-size:.78rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.7;margin-top:.9rem;max-width:26ch}
+.footer-contact{margin-top:1rem;font-size:.76rem;color:rgba(255,255,255,.42);line-height:1.8}
+.footer-contact a{color:var(--gold)}
+.footer-col-title{font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.85rem}
+.footer-col a{display:block;font-size:.78rem;color:rgba(255,255,255,.5);padding:.18rem 0;transition:color .2s}
+.footer-col a:hover{color:white}
+.footer-bottom{padding-top:1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.68rem;color:rgba(255,255,255,.26)}
+.footer-social{display:flex;gap:.65rem}
+.social-btn{width:29px;height:29px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.42);font-size:.7rem;transition:all .2s;cursor:pointer}
+.social-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+@media(max-width:1024px){
+  .boats-grid{grid-template-columns:1fr 1fr}
+  .boat-card:first-child{grid-row:auto}
+  .supplies-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr;gap:3rem}
+}
+@media(max-width:768px){
+  :root{--hh:60px}
+  .main-nav{display:none}
+  .pillars{grid-template-columns:repeat(2,1fr)}
+  .boats-grid{grid-template-columns:1fr}
+  .stats-band{justify-content:center;gap:1.5rem}
+  .stat-div{display:none}
+  .press-band{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .cart-drawer{width:100vw}
+}
+</style>
+</head>
+<body>
+
+<!-- Search -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-inner">
+    <div class="search-label">Search B&amp;B Yacht Designs</div>
+    <div class="search-wrap">
+      <input type="text" class="search-input" placeholder="Core Sound 17, epoxy, blocks…" id="searchInput">
+      <button class="search-close" onclick="closeSearch()">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <div class="cart-drawer-title">Your Cart</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-drawer-body" id="cartBody">
+    <div class="cart-empty">
+      <p style="font-family:var(--serif);font-size:1.1rem;color:var(--navy);margin-bottom:.5rem">Your cart is empty</p>
+      <p style="font-size:.82rem">Browse our plans and kits to get started.</p>
+    </div>
+  </div>
+  <div class="cart-drawer-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartTotal">$0.00</span></div>
+    <button class="cart-checkout" id="cartCheckoutBtn">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header" id="siteHeader">
+  <a href="/" class="logo">
+    <img class="logo-img" src="images/logo.jpg" alt="B&B Yacht Designs">
+    <div class="logo-text">
+      <span class="brand">B&amp;B Yacht Designs</span>
+      <span class="tagline">Bayboro, NC · Est. 1984</span>
+    </div>
+  </a>
+  <nav class="main-nav">
+    <div class="nav-item">
+      <button class="nav-link">Plans &amp; Kits <svg width="9" height="5" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <div class="mega-menu" style="min-width:720px;">
+        <div class="mega-col">
+          <div class="mega-col-title">Sailboats</div>
+          <a href="/boats/cs15">Core Sound 15</a>
+          <a href="/boats/core-sound-17">Core Sound 17</a>
+          <a href="/boats/cs17mk3">Core Sound 17 Mk3</a>
+          <a href="/boats/core-sound-20">Core Sound 20</a>
+          <a href="/boats/cs20mk3">Core Sound 20 Mk3</a>
+          <a href="/boats/lapwing">Lapwing 16</a>
+          <a href="/boats/belhaven">Belhaven 19</a>
+          <a href="/boats/ec-22">EC-22</a>
+          <a href="/boats/classglobe580">Class Globe 5.80</a>
+          <a href="/boats/bay-river-skiff">Bay River Skiff</a>
+          <a href="/boats/princess">Princess Sharpie 22′</a>
+          <a href="/boats/princess26">Princess Sharpie 26′</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title">Powerboats</div>
+          <a href="/boats/marissa">Marissa 18</a>
+          <a href="/boats/ob-20">Outer Banks 20</a>
+          <a href="/boats/ob-24">Outer Banks 24</a>
+          <a href="/boats/ob26">Outer Banks 26</a>
+          <a href="/boats/ocracoke-20">Ocracoke 20</a>
+          <a href="/boats/ocracoke-24">Ocracoke 24</a>
+          <a href="/boats/ocracoke-256">Ocracoke 256</a>
+          <a href="/boats/cl28">Cape Lookout 28</a>
+          <a href="/boats/jessy12">Jessy 12′</a>
+          <a href="/boats/jessy15">Jessy 15′</a>
+          <a href="/boats/jessy17">Jessy 17′</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title">Dinghies &amp; Tenders</div>
+          <a href="/boats/spindrift">Spindrift Dinghy</a>
+          <a href="/boats/s9">Spindrift 9</a>
+          <a href="/boats/s10">Spindrift 10</a>
+          <a href="/boats/catspaw">Catspaw Pram</a>
+          <a href="/boats/amanda">Amanda</a>
+          <div class="mega-col-title" style="margin-top:.8rem">Kayaks &amp; Canoes</div>
+          <a href="/boats/diva">Diva Kayak</a>
+          <a href="/boats/grand-diva">Grand Diva</a>
+          <a href="/boats/moc12">Moccasin 12′</a>
+          <a href="/boats/moccasin14">Moccasin 14′</a>
+          <a href="/boats/flyfisher">Flyfisher 13′</a>
+          <a href="/boats/birder">Birder Canoe</a>
+          <a href="/boats/expeditioncanoe">Expedition Sailing Canoe</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title">Browse</div>
+          <a href="/collections/free-plans">Free Plans</a>
+          <a href="/collections/plans-and-kits">All Plans &amp; Kits</a>
+          <a href="/collections/boat-plans-and-kits-individual-boat-kit-parts">Individual Kit Parts</a>
+          <a href="/boats/wingfoil">Wing Foil Board Kits</a>
+          <a href="/boats/models">Scale Model Kits</a>
+          <div class="mega-col-title" style="margin-top:.8rem">Community</div>
+          <a href="#">Builders Forum</a>
+          <a href="#">YouTube Channel</a>
+          <a href="#">Substack</a>
+          <a href="/collections/messabout">Annual Messabout</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link">Building Supplies <svg width="9" height="5" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <div class="mega-menu" style="min-width:560px;">
+        <div class="mega-col">
+          <div class="mega-col-title">Materials</div>
+          <a href="/collections/building-supplies-epoxy">Epoxy &amp; Thickeners</a>
+          <a href="/collections/building-supplies-plywood">Plywood</a>
+          <a href="/collections/building-supplies-fiberglass">Fiberglass</a>
+          <a href="/collections/building-supplies-finishing">Finishing &amp; Paint</a>
+          <a href="/collections/building-supplies-tools">Tools</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title">Hardware &amp; Rigging</div>
+          <a href="/collections/building-supplies-hardware-blocks">Blocks &amp; Tackles</a>
+          <a href="/collections/building-supplies-hardware-cleats">Cleats</a>
+          <a href="/collections/building-supplies-hardware-and-rigging-rudder">Rudder Hardware</a>
+          <a href="/collections/hardware-and-accessories-hatches">Hatches</a>
+          <a href="/collections/hardware-and-accessories-hardware-and-rigging-fasteners">Fasteners</a>
+          <a href="/collections/building-supplies-hardware-general-shackles">Shackles</a>
+          <a href="/collections/building-supplies-hardware-hardware-kits">Hardware Kits</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title">Spars &amp; Sails</div>
+          <a href="/collections/aluminum">Aluminum Tubing</a>
+          <a href="/collections/hardware-and-accessories-aluminum-masts-sailtrack-sailtrack-and-accessories">Sailtrack</a>
+          <a href="/collections/mastplugs">Mast Plugs</a>
+          <a href="/collections/new-store-building-supplies-sails">Sails</a>
+          <a href="/collections/new-store-building-supplies-lines">Lines &amp; Cordage</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="/services">Design Services</a></div>
+    <div class="nav-item"><a class="nav-link" href="/collections/our-pics">B&amp;B Picks</a></div>
+  </nav>
+  <div class="header-right">
+    <button class="hbtn" onclick="openSearch()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <a href="/account" class="hbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <button class="hbtn cart-wrap" onclick="openCart()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <a href="/contact" class="hcta">Get a Quote</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-slide active">
+    <img src="images/hero-sailboat.jpg" alt="B&B sailboat at sunset — North Carolina sound">
+  </div>
+  <div class="hero-slide">
+    <img src="images/hero-powerboat.jpg" alt="Marissa 18 powerboat underway">
+  </div>
+  <div class="hero-slide">
+    <img src="images/hero-dinghy.jpg" alt="B&B tender dinghy">
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Graham Byrnes, NA · Bayboro, NC · Since 1984</div>
+    <h1 class="hero-title">Boats that <em>exceed</em> every expectation</h1>
+    <p class="hero-sub">B&B designs fast, stable, trailerable boats that amateur builders can actually finish — and then sail hard. Plans, CNC kits, and the supplies to see it through.</p>
+    <div class="hero-actions">
+      <a href="/boats" class="btn-primary">Browse All 40+ Designs</a>
+      <a href="/collections/free-plans" class="btn-outline">Download Free Plans</a>
+    </div>
+  </div>
+  <div class="slide-dots">
+    <button class="slide-dot active" onclick="goSlide(0)"></button>
+    <button class="slide-dot" onclick="goSlide(1)"></button>
+    <button class="slide-dot" onclick="goSlide(2)"></button>
+  </div>
+</section>
+
+<!-- Pillars -->
+<div class="pillars">
+  <a href="/collections/plans-and-kits" class="pillar">
+    <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 30 L18 6 L30 30 Z"/><path d="M10 22 H26"/></svg>
+    <div class="pillar-title">Boat Plans</div>
+    <div class="pillar-desc">Full-size drawings and instant digital downloads for 40+ proven designs.</div>
+    <div class="pillar-link">Shop Plans →</div>
+  </a>
+  <a href="/collections/plans-and-kits" class="pillar">
+    <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="12" width="28" height="18" rx="1"/><path d="M4 17 H32"/><path d="M12 12 L12 8 Q18 4 24 8 L24 12"/></svg>
+    <div class="pillar-title">CNC Kits</div>
+    <div class="pillar-desc">Precision CNC-cut kits made on our own machine in Bayboro.</div>
+    <div class="pillar-link">Configure a Kit →</div>
+  </a>
+  <a href="/collections/building-supplies" class="pillar">
+    <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="6"/><path d="M18 4V10M18 26V32M4 18H10M26 18H32"/></svg>
+    <div class="pillar-title">Building Supplies</div>
+    <div class="pillar-desc">The epoxy, plywood, and hardware we use ourselves.</div>
+    <div class="pillar-link">Shop Supplies →</div>
+  </a>
+  <a href="/services" class="pillar" style="border-right:none">
+    <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 28 L8 14 L18 6 L28 14 L28 28 Z"/><rect x="14" y="20" width="8" height="8"/></svg>
+    <div class="pillar-title">Design Services</div>
+    <div class="pillar-desc">Custom design, 3D scanning — direct from the designer.</div>
+    <div class="pillar-link">Get in Touch →</div>
+  </a>
+</div>
+
+<!-- Featured Designs -->
+<section class="section boats-section">
+  <div class="boats-header">
+    <div>
+      <div class="section-eyebrow">40+ designs since 1984</div>
+      <h2 class="section-title">Find your <em>next</em> build</h2>
+    </div>
+    <a href="/collections/plans-and-kits" class="btn-primary" style="background:var(--navy);border-color:var(--navy);color:white;padding:.62rem 1.3rem">View All Designs →</a>
+  </div>
+  <div class="boats-grid" id="boatsGrid">
+    <div class="boat-card skeleton"></div>
+    <div class="boat-card skeleton"></div>
+    <div class="boat-card skeleton"></div>
+    <div class="boat-card skeleton"></div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-band">
+  <div class="stat"><div class="stat-num">40+</div><div class="stat-lbl">Designs</div></div>
+  <div class="stat-div"></div>
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-lbl">CS17 Hulls Built</div></div>
+  <div class="stat-div"></div>
+  <div class="stat"><div class="stat-num">6×</div><div class="stat-lbl">Everglades Challenge<br>Class-4 Wins</div></div>
+  <div class="stat-div"></div>
+  <div class="stat"><div class="stat-num">CNC</div><div class="stat-lbl">Cut In-House<br>Bayboro NC</div></div>
+  <div class="stat-div"></div>
+  <div class="stat"><div class="stat-num">1984</div><div class="stat-lbl">Est. Vandemere, NC</div></div>
+</div>
+
+<!-- Supplies -->
+<section class="section" style="background:var(--warm-white)">
+  <div class="section-eyebrow">Everything you need</div>
+  <h2 class="section-title">Building <em>Supplies</em></h2>
+  <p class="section-sub">We stock what we use ourselves. Every product chosen because it works in our shop, on our builds.</p>
+  <div class="supplies-grid">
+    <a href="/collections/building-supplies-epoxy" class="supply-card"><div class="supply-card-img">🧪</div><div class="supply-card-body"><div class="supply-card-title">Epoxy &amp; Thickeners<span class="supply-card-arrow">→</span></div><div class="supply-card-sub">Resin, hardener, cabosil, wood flour</div></div></a>
+    <a href="/collections/building-supplies-plywood" class="supply-card"><div class="supply-card-img">🪵</div><div class="supply-card-body"><div class="supply-card-title">Marine Plywood<span class="supply-card-arrow">→</span></div><div class="supply-card-sub">Okoume, meranti, douglas fir</div></div></a>
+    <a href="/collections/building-supplies-hardware-blocks" class="supply-card"><div class="supply-card-img">⚓</div><div class="supply-card-body"><div class="supply-card-title">Blocks &amp; Hardware<span class="supply-card-arrow">→</span></div><div class="supply-card-sub">Ronstan, Harken, Racelite, Seadog</div></div></a>
+    <a href="/collections/new-store-building-supplies-sails" class="supply-card"><div class="supply-card-img">⛵</div><div class="supply-card-body"><div class="supply-card-title">Sails &amp; Rigging<span class="supply-card-arrow">→</span></div><div class="supply-card-sub">Custom sails, aluminum tubing, sailtrack</div></div></a>
+  </div>
+</section>
+
+<!-- Why B&B -->
+<section class="section why-section">
+  <div class="why-grid">
+    <div class="why-image">
+      <img src="images/hero-powerboat.jpg" alt="Marissa 18 — fast, light, built to exceed expectations">
+      <div class="why-badge"><div class="num">1984</div><div class="lbl">Est. Vandemere NC</div></div>
+    </div>
+    <div>
+      <div class="section-eyebrow">The B&amp;B design philosophy</div>
+      <h2 class="section-title">Built to <em>exceed</em> what you paid for</h2>
+      <p class="section-sub">Graham Byrnes trained as a shipwright in Australia, circumnavigated in a boat of his own design, and settled on the North Carolina sounds forty years ago. The designs that followed are built around one principle: if you're spending the time and money building a boat, it should reward you beyond your expectations.</p>
+      <div class="why-points">
+        <div class="why-point"><div class="why-num">01</div><div class="why-text"><h4>Fast by design — not by accident</h4><p>Wide, flat sterns and shallow-V hull forms that plane well beyond theoretical hull speed. Six Everglades Challenge Class-4 wins and two course records prove it.</p></div></div>
+        <div class="why-point"><div class="why-num">02</div><div class="why-text"><h4>Stable when it matters</h4><p>High bilges, wide decks, generous beam — boats that are forgiving in open water. A cat-ketch rig you can reef with one hand.</p></div></div>
+        <div class="why-point"><div class="why-num">03</div><div class="why-text"><h4>The builder's experience matters</h4><p>Inspired by Meade Gougeon's standard — every plan set and CNC kit is designed so the process is clear, the parts fit, and you end up with a boat.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Press -->
+<div class="press-band">
+  <div>
+    <div class="press-quote">"Graham Byrnes is a successful and innovative proponent of a boat style that perhaps has not yet been accepted in traditional circles. His boats are <strong>great performers by any standard.</strong>"</div>
+    <div class="press-source">— WoodenBoat Magazine, Issue 210</div>
+  </div>
+  <div class="press-actions">
+    <a href="/boats" class="btn-primary">Browse All Designs</a>
+    <a href="/about" class="btn-outline">Our Story</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="logo"><img class="logo-img" src="images/logo.jpg" alt="B&B Yacht Designs" style="height:40px"><div class="logo-text"><span class="brand">B&amp;B Yacht Designs</span><span class="tagline">Est. 1984 · Bayboro, NC</span></div></div>
+      <p class="footer-desc">Award-winning boat plans and CNC kits for the amateur builder. Designed by Graham Byrnes, NA.</p>
+      <div class="footer-contact">252-631-0015<br><a href="mailto:bandbkitboats@gmail.com">bandbkitboats@gmail.com</a><br>342 Chapel Creek Dr · Bayboro NC 28515</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Plans &amp; Kits</div>
+      <a href="/collections/sailboats">Sailboats</a>
+      <a href="/collections/plans-powerboats">Powerboats</a>
+      <a href="/collections/dinghies-and-tenders">Dinghies &amp; Tenders</a>
+      <a href="/collections/canoes">Kayaks &amp; Canoes</a>
+      <a href="/collections/free-plans">Free Plans</a>
+      <a href="/collections/models">Scale Models</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Building Supplies</div>
+      <a href="/collections/building-supplies-epoxy">Epoxy &amp; Thickeners</a>
+      <a href="/collections/building-supplies-plywood">Plywood</a>
+      <a href="/collections/building-supplies-fiberglass">Fiberglass</a>
+      <a href="/collections/boat-accessories">Hardware &amp; Rigging</a>
+      <a href="/collections/new-store-building-supplies-sails">Sails</a>
+      <a href="/collections/aluminum">Aluminum Tubing</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="/about">About B&amp;B</a>
+      <a href="/services">Design Services</a>
+      <a href="/contact">Contact Us</a>
+      <a href="#">Builders Forum</a>
+      <a href="#">YouTube Channel</a>
+      <a href="#">Substack Newsletter</a>
+      <a href="/collections/messabout">Annual Messabout</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 B&amp;B Yacht Designs LLC · Bayboro, NC · All rights reserved</div>
+    <div class="footer-social">
+      <a class="social-btn" href="#" title="YouTube">▶</a>
+      <a class="social-btn" href="#" title="Facebook">f</a>
+      <a class="social-btn" href="#" title="Instagram">◎</a>
+    </div>
+  </div>
+</footer>
+
+<script src="nav-data.js"></script>
+<script>
+// Shopify Storefront API
+async function shopifyQuery(query, variables={}) {
+  const res = await fetch(SHOPIFY_CONFIG.api, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.token
+    },
+    body: JSON.stringify({ query, variables })
+  });
+  const data = await res.json();
+  return data.data;
+}
+
+// Cart
+let cartId = localStorage.getItem('bb_cart_id') || null;
+
+async function getOrCreateCart() {
+  if (cartId) {
+    try {
+      const data = await shopifyQuery(`query { cart(id: "${cartId}") {
+        id checkoutUrl totalQuantity
+        cost { totalAmount { amount currencyCode } }
+        lines(first: 20) { edges { node {
+          id quantity
+          merchandise { ... on ProductVariant {
+            id title price { amount }
+            product { title featuredImage { url } }
+          }}
+        }}}
+      }}`);
+      if (data?.cart) return data.cart;
+    } catch(e) {}
+  }
+  const data = await shopifyQuery(`mutation { cartCreate { cart {
+    id checkoutUrl totalQuantity
+    cost { totalAmount { amount currencyCode } }
+    lines(first:20) { edges { node { id } } }
+  }}}`);
+  const cart = data?.cartCreate?.cart;
+  if (cart) { cartId = cart.id; localStorage.setItem('bb_cart_id', cartId); }
+  return cart;
+}
+
+async function addToCart(variantId, qty=1) {
+  const cart = await getOrCreateCart();
+  const data = await shopifyQuery(`
+    mutation cartAdd($cartId:ID!,$lines:[CartLineInput!]!) {
+      cartLinesAdd(cartId:$cartId, lines:$lines) {
+        cart { id totalQuantity cost { totalAmount { amount } }
+          lines(first:20) { edges { node { id quantity
+            merchandise { ... on ProductVariant { id title price { amount }
+              product { title featuredImage { url } } } } } } }
+        }
+      }
+    }`,
+    { cartId: cart.id, lines: [{ merchandiseId: variantId, quantity: qty }] });
+  const updated = data?.cartLinesAdd?.cart;
+  if (updated) { cartId = updated.id; renderCart(updated); openCart(); }
+}
+
+function renderCart(cart) {
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+  const count = document.getElementById('cartCount');
+  const total = document.getElementById('cartTotal');
+  const lines = cart.lines.edges.map(e => e.node);
+  if (lines.length === 0) {
+    body.innerHTML = `<div class="cart-empty"><p style="font-family:var(--serif);font-size:1.1rem;color:var(--navy);margin-bottom:.5rem">Your cart is empty</p><p style="font-size:.82rem">Browse our plans and kits to get started.</p></div>`;
+    footer.style.display = 'none';
+    count.classList.remove('visible');
+    return;
+  }
+  body.innerHTML = lines.map(line => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${line.merchandise.product.featuredImage?.url || ''}" alt="${line.merchandise.product.title}">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${line.merchandise.product.title}</div>
+        <div class="cart-item-price">Qty ${line.quantity} · $${(parseFloat(line.merchandise.price.amount)*line.quantity).toFixed(2)}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${line.id}')">✕</button>
+    </div>`).join('');
+  total.textContent = `$${parseFloat(cart.cost.totalAmount.amount).toFixed(2)}`;
+  footer.style.display = 'block';
+  count.textContent = cart.totalQuantity;
+  count.classList.toggle('visible', cart.totalQuantity > 0);
+  document.getElementById('cartCheckoutBtn').onclick = () => {
+    window.location.href = `https://${SHOPIFY_CONFIG.domain}/cart`;
+  };
+}
+
+async function removeFromCart(lineId) {
+  const data = await shopifyQuery(`
+    mutation($cartId:ID!,$lineIds:[ID!]!) {
+      cartLinesRemove(cartId:$cartId,lineIds:$lineIds) {
+        cart { id totalQuantity cost { totalAmount { amount } }
+          lines(first:20) { edges { node { id quantity
+            merchandise { ... on ProductVariant { id title price { amount }
+              product { title featuredImage { url } } } } } } }
+        }
+      }
+    }`,
+    { cartId, lineIds: [lineId] });
+  const cart = data?.cartLinesRemove?.cart;
+  if (cart) renderCart(cart);
+}
+
+// Load featured boats from Shopify
+async function loadFeaturedBoats() {
+  const grid = document.getElementById('boatsGrid');
+  try {
+    const data = await shopifyQuery(`query {
+      products(first:8, query:"product_type:Boat Plans") {
+        edges { node {
+          id title handle
+          featuredImage { url altText }
+          priceRange { minVariantPrice { amount } }
+          variants(first:1) { edges { node { id } } }
+        }}
+      }
+    }`);
+    const products = (data?.products?.edges?.map(e=>e.node) || []).filter(p => p.featuredImage);
+    if (products.length === 0) throw new Error('No products');
+    const featured = products.slice(0,3);
+    grid.innerHTML = featured.map((p,i) => `
+      <div class="boat-card" ${i===0?'style="grid-row:1/3"':''}>
+        <img src="${p.featuredImage.url}&width=800" alt="${p.title}" loading="lazy">
+        <div class="boat-card-info">
+          <span class="boat-tag">Boat Plans</span>
+          <div class="boat-name">${p.title.replace(' Plans','').replace(' (Download)','').replace(' plan printing','').replace(' Plan Printing','')}</div>
+          <div class="boat-spec">From $${parseFloat(p.priceRange.minVariantPrice.amount).toFixed(0)}</div>
+          <div class="boat-actions">
+            <a href="/products/${p.handle}" class="boat-btn boat-btn-plans">View Plans</a>
+          </div>
+        </div>
+      </div>`).join('') + `
+      <div class="boat-card" style="background:var(--navy-mid)">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:2rem">
+          <div style="text-align:center">
+            <div style="font-family:var(--serif);font-size:1.65rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.3;margin-bottom:1rem">Sailboats · Powerboats<br>Kayaks · Canoes<br><em style="color:var(--gold-lt)">Dinghies &amp; More</em></div>
+            <a href="/collections/plans-and-kits" style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.4);padding:.45rem .9rem;display:inline-block">Browse All 40+ →</a>
+          </div>
+        </div>
+      </div>`;
+  } catch(e) {
+    grid.innerHTML = `
+      <div class="boat-card" style="grid-row:1/3">
+        <img src="images/hero-sailboat.jpg" alt="Core Sound 17">
+        <div class="boat-card-info">
+          <span class="boat-tag">Sailboat · CNC Kit Available</span>
+          <div class="boat-name">Core Sound 17</div>
+          <div class="boat-spec">17′ · Cat-ketch · 500+ hulls built</div>
+          <div class="boat-actions"><a href="/boats/core-sound-17" class="boat-btn boat-btn-plans">Plans</a><a href="/boats/core-sound-17" class="boat-btn boat-btn-kit">Build Kit</a></div>
+        </div>
+      </div>
+      <div class="boat-card">
+        <img src="images/hero-powerboat.jpg" alt="Marissa 18">
+        <div class="boat-card-info">
+          <span class="boat-tag">Powerboat · CNC Kit</span>
+          <div class="boat-name">Marissa 18</div>
+          <div class="boat-spec">18′ · Center console · 21 knots</div>
+          <div class="boat-actions"><a href="/boats/marissa" class="boat-btn boat-btn-plans">Plans</a><a href="/boats/marissa" class="boat-btn boat-btn-kit">Build Kit</a></div>
+        </div>
+      </div>
+      <div class="boat-card">
+        <img src="images/hero-dinghy.jpg" alt="Catspaw Pram">
+        <div class="boat-card-info">
+          <span class="boat-tag">Tender · Plans</span>
+          <div class="boat-name">Catspaw Pram</div>
+          <div class="boat-spec">7–9′ · Row/sail · Ideal first build</div>
+          <div class="boat-actions"><a href="/boats/catspaw" class="boat-btn boat-btn-plans">Plans</a></div>
+        </div>
+      </div>
+      <div class="boat-card" style="background:var(--navy-mid)">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:2rem">
+          <div style="text-align:center"><div style="font-family:var(--serif);font-size:1.65rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.3;margin-bottom:1rem">40+ Designs<br><em style="color:var(--gold-lt)">For Every Builder</em></div><a href="/collections/plans-and-kits" style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.4);padding:.45rem .9rem;display:inline-block">Browse All →</a></div>
+        </div>
+      </div>`;
+  }
+}
+
+// Hero slideshow
+let cur=0;
+const slides=document.querySelectorAll('.hero-slide');
+const dots=document.querySelectorAll('.slide-dot');
+function goSlide(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');dots[cur].classList.add('active');}
+setInterval(()=>goSlide(cur+1),5500);
+
+// Header scroll
+const hdr=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>60));
+
+// Cart
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open');document.body.style.overflow='';}
+
+// Search
+function openSearch(){document.getElementById('searchOverlay').classList.add('open');setTimeout(()=>document.getElementById('searchInput').focus(),50);}
+function closeSearch(){document.getElementById('searchOverlay').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSearch();closeCart();}});
+
+// Init
+loadFeaturedBoats();
+getOrCreateCart().then(cart=>{ if(cart) renderCart(cart); }).catch(()=>{});
+</script>
+</body>
+</html>
